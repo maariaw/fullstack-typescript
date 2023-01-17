@@ -15,11 +15,11 @@ const parseBodyDimensions = (args: Array<string>): BodyDimensions => {
         return {
             height: Number(args[2]),
             weight: Number(args[3])
-        }
+        };
     } else {
         throw new Error('Provided values were not numbers!');
     }
-}
+};
 
 export const calculateBmi = (height: number, weight: number): string => {
     height = height / 100;
@@ -43,7 +43,7 @@ export const calculateBmi = (height: number, weight: number): string => {
     } else {
         return 'Obese (class III)';
     }
-}
+};
 
 try {
     const { height, weight } = parseBodyDimensions(process.argv);

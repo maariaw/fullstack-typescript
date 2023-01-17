@@ -17,23 +17,23 @@ const parseInput = (args: Array<string>): Input => {
     if (args.length < 4 ) throw new Error('Not enough arguments.');
     const numberMapper = (arg: string): number => {
         return Number(arg);
-    }
+    };
     const nanFilter = (value: number, index: number): boolean => {
         return !isNaN(value) || index < 2;
-    }
+    };
     const validNumbers = args.map(numberMapper).filter(nanFilter);
     if (validNumbers.length == args.length &&
             validNumbers[2] > 0) {
         return {
             hours: validNumbers.slice(3),
             target: validNumbers[2]
-        }
+        };
     } else if (validNumbers.length !== args.length) {
         throw new Error('Provided values were not all numbers');
     } else {
         throw new Error('Target must be more than zero');
     }
-}
+};
 
 const calculateExercises = (hours: Array<number>, target: number): Result => {
     const trainingDays = hours.filter(exercise => exercise > 0);
@@ -59,15 +59,15 @@ const calculateExercises = (hours: Array<number>, target: number): Result => {
         ratingDescription: ratingText,
         target: target,
         average: average
-    }
-}
+    };
+};
 
 try {
     const { hours, target } = parseInput(process.argv);
     const result = calculateExercises(hours, target);
     console.log(result);
 } catch (error: unknown) {
-    let errorMessage = 'Something bad happened.'
+    let errorMessage = 'Something bad happened.';
     if (error instanceof Error) {
       errorMessage += ' Error: ' + error.message;
     }
