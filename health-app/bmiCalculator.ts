@@ -1,4 +1,4 @@
-interface BodyDimensions {
+export interface BodyDimensions {
     height: number;
     weight: number;
 }
@@ -21,7 +21,7 @@ const parseBodyDimensions = (args: Array<string>): BodyDimensions => {
     }
 }
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
     height = height / 100;
     const square = height * height;
     const bmi =  weight / square;
