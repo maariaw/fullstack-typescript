@@ -1,4 +1,4 @@
-interface Input {
+export interface Input {
     hours: Array<number>;
     target: number;
 }
@@ -35,7 +35,7 @@ const parseInput = (args: Array<string>): Input => {
     }
 };
 
-const calculateExercises = (hours: Array<number>, target: number): Result => {
+export const calculateExercises = (hours: Array<number>, target: number): Result => {
     const trainingDays = hours.filter(exercise => exercise > 0);
     const sum = hours.reduce((total, hour) => total + hour, 0);
     const average = sum / hours.length;
