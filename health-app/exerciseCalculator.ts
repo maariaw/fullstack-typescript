@@ -1,3 +1,8 @@
+interface Input {
+    hours: Array<number>;
+    target: number;
+}
+
 interface Result {
     periodLength: number;
     trainingDays: number;
@@ -6,6 +11,28 @@ interface Result {
     ratingDescription: string;
     target: number;
     average: number;
+}
+
+const parseInput = (args: Array<string>): Input => {
+    if (args.length < 4 ) throw new Error('Not enough arguments.');
+    const numberMapper = (arg: string): number => {
+        return Number(arg);
+    }
+    const nanFilter = (value: number, index: number): boolean => {
+        return !isNaN(value) || index < 2;
+    }
+    const validNumbers = args.map(numberMapper).filter(nanFilter);
+    if (validNumbers.length == args.length &&
+            validNumbers[2] > 0) {
+        return {
+            hours: validNumbers.slice(3),
+            target: validNumbers[2]
+        }
+    } else if (validNumbers.length !== args.length) {
+        throw new Error('Provided values were not all numbers');
+    } else {
+        throw new Error('Target must be more than zero');
+    }
 }
 
 const calculateExercises = (hours: Array<number>, target: number): Result => {
@@ -36,7 +63,8 @@ const calculateExercises = (hours: Array<number>, target: number): Result => {
 }
 
 try {
-    const result = calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2);
+    const { hours, target } = parseInput(process.argv);
+    const result = calculateExercises(hours, target);
     console.log(result);
 } catch (error: unknown) {
     let errorMessage = 'Something bad happened.'

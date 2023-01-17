@@ -1,3 +1,26 @@
+interface BodyDimensions {
+    height: number;
+    weight: number;
+}
+
+const parseBodyDimensions = (args: Array<string>): BodyDimensions => {
+    if (args.length < 4 ) {
+        throw new Error('Provide both height and weight as arguments');
+    }
+    if (args.length > 4 ) {
+        throw new Error('Provide only height and weight as arguments');
+    }
+
+    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+        return {
+            height: Number(args[2]),
+            weight: Number(args[3])
+        }
+    } else {
+        throw new Error('Provided values were not numbers!');
+    }
+}
+
 const calculateBmi = (height: number, weight: number): string => {
     height = height / 100;
     const square = height * height;
@@ -22,4 +45,13 @@ const calculateBmi = (height: number, weight: number): string => {
     }
 }
 
-console.log(calculateBmi(180, 74));
+try {
+    const { height, weight } = parseBodyDimensions(process.argv);
+    console.log(calculateBmi(height, weight));
+} catch (error: unknown) {
+    let errorMessage = 'Something bad occurred.';
+    if (error instanceof Error) {
+        errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
+}
