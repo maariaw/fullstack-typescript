@@ -1,4 +1,5 @@
 import express from 'express';
+import diagnosisRouter from './routes/diagnoses';
 import cors from 'cors';
 const allowedOrigins = ['http://localhost:3000'];
 const options: cors.CorsOptions = {
@@ -16,7 +17,8 @@ app.get('/api/ping', (_req, res) => {
     res.send('pong!');
 });
 
+app.use('/api/diagnoses', diagnosisRouter);
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-    
 });
